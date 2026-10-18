@@ -21,8 +21,22 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Restore the tenant if this Activity was recreated (e.g. rotation)
+        if (savedInstanceState != null) {
+            val name = savedInstanceState.getString("tenant_name")
+            val phone = savedInstanceState.getString("tenant_phone")
+            val rent = savedInstanceState.getString("tenant_rent")
+
+            if (name != null && phone != null && rent != null) {
+                val tenant = Tenant(name, phone, rent)
+
+                lastTenant = tenant
+                binding.tenant = tenant
+            }
+        }
+
         val userEmail = intent.getStringExtra("EMAIL")
-        if (userEmail != null) {
+        if (savedInstanceState == null && userEmail != null) {
             Toast.makeText(this, "Logged in as $userEmail", Toast.LENGTH_SHORT).show()
         }
 
@@ -74,6 +88,19 @@ class MainActivity : AppCompatActivity() {
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, tenant.summary())
             startActivity(Intent.createChooser(intent, "Share tenant"))
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        Log.d("TENANT_LIFECYCLE", "MainActivity: onSaveInstanceState")
+
+        val tenant = lastTenant
+
+        if (tenant != null) {
+            outState.putString("tenant_name", tenant.name)
+            outState.putString("tenant_phone", tenant.phone)
+            outState.putString("tenant_rent", tenant.rent)
         }
     }
 
