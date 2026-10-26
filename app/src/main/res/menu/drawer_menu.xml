@@ -18,6 +18,20 @@
             android:icon="@android:drawable/ic_menu_view"
             android:title="View Tenants" />
 
+        <item
+            android:id="@+id/aboutFragment"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="About" />
+
+    </group>
+
+    <group>
+
+        <item
+            android:id="@+id/action_logout"
+            android:icon="@android:drawable/ic_menu_close_clear_cancel"
+            android:title="Logout" />
+
     </group>
 
 </menu>

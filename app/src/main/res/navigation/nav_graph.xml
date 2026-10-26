@@ -53,4 +53,10 @@
             android:defaultValue="@null" />
     </fragment>
 
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.example.tenantmanagementsystem.AboutFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_about" />
+
 </navigation>
